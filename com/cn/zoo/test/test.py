@@ -104,7 +104,7 @@ def progressBar5():
     for i in progressbar.progressbar(range(20), widgets=widgets):
         time.sleep(0.1)
 
-# vim: fileencoding=utf-8
+
 def progressBar6():
     import time
     import progressbar
@@ -135,6 +135,15 @@ def progressBar6():
         time.sleep(0.2)
 
 
+def progressBar7():
+    import sys
+    import time
+    for i in range(10):
+        sys.stdout.write("\r{}".format(i))
+        sys.stdout.flush()
+        time.sleep(0.3)
+
+
 if __name__ == "__main__":
     pass
     # testSeekInWrite()
@@ -146,4 +155,5 @@ if __name__ == "__main__":
     # progressBar3()
     # progressBar4()
     # progressBar5()
-    progressBar6()
+    # progressBar6()
+    progressBar7()
