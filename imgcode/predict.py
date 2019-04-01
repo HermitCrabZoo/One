@@ -19,8 +19,10 @@ def threshold_image(filepath):
 def threshold(filepath):
     """使用cv2的方式二值化图片，返回ndarray对象"""
     image = filepath if isinstance(filepath, np.ndarray) else cv2.imread(filepath, cv2.IMREAD_UNCHANGED)
-    v, arr = cv2.threshold(image, 130, 255, 0)
-    return arr
+    image = cv2.bilateralFilter(src=image, d=1, sigmaColor=80, sigmaSpace=80)
+    v, image = cv2.threshold(image, 130, 255, 0)
+    image = cv2.resize(image, (644, 161))
+    return image
 
 
 def vec2name(vec):
@@ -34,7 +36,7 @@ def crop(ndarray):
     and returns cropped image.
     """
     # 450*114
-    w, h, padding = 500, 126, 10
+    w, h, padding = 450, 114, 10
     tow_dim = ndarray[padding:-padding, padding:-padding, 0]
     rows, cols = tow_dim.shape
     coord_sum = []
@@ -84,15 +86,14 @@ def do_predict():
 
 if __name__ == "__main__":
     # do_predict()
-    f = r"E:\result\img\ali2011_21862650_5c885e45a9a11.jpg"
+    f = r"E:\result\img\bramswig2017_28124119_5c88a848927ae.jpg"
     image = cv2.imread(f)
     th = threshold(cv2.bilateralFilter(src=image, d=3, sigmaColor=140, sigmaSpace=140))
     # Image.fromarray(th).show()
     # dst = cv2.medianBlur(th, 3)
     # dst = cv2.GaussianBlur(th, (3, 3), 0)
     dst = threshold(cv2.bilateralFilter(src=image, d=1, sigmaColor=100, sigmaSpace=100))
-    line = np.zeros((1, 800, 3), dtype='uint8')
-    print(line.shape)
+    line = np.zeros((1, 644, 3), dtype='uint8')
     Image.fromarray(np.vstack((th, line, dst))).show()
 
 
