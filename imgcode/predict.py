@@ -70,7 +70,7 @@ def crop(ndarray):
 
 
 def do_predict():
-    model_dir = project_root_with(r'imgcode\model1\train.model-240000')
+    model_dir = project_root_with(r'imgcode\model2\train.model-260000')
     x = tf.placeholder(tf.float32, [None, 224, 224, 3])
     pred, end_points = nets.resnet_v2.resnet_v2_50(x, num_classes=6 * 26, is_training=True)
     predict = tf.reshape(pred, [-1, 6, 26])
